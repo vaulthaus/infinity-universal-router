@@ -14,9 +14,6 @@ import {RouterParameters} from "../../../src/base/RouterImmutables.sol";
  */
 contract DeployBscTestnet is DeployUniversalRouter {
     /// @notice contract address will be based on deployment salt
-    function getDeploymentSalt() public pure override returns (bytes32) {
-        return keccak256("INFINITY-UNIVERSAL-ROUTER/UniversalRouter/0.97");
-    }
 
     // ref from v3 universal router: https://testnet.bscscan.com/tx/0xdfab014e4f5df56d5a8b16375028ad0340f80070bd848eb57c4e0baf41210487
     function setUp() public override {

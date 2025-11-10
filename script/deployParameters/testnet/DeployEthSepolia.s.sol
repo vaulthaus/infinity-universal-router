@@ -15,9 +15,6 @@ import {RouterParameters} from "../../../src/base/RouterImmutables.sol";
  */
 contract DeployEthSepolia is DeployUniversalRouter {
     /// @notice contract address will be based on deployment salt
-    function getDeploymentSalt() public pure override returns (bytes32) {
-        return keccak256("INFINITY-UNIVERSAL-ROUTER/UniversalRouter/0.0001");
-    }
 
     // ref from v3 universal router: https://sepolia.etherscan.io/tx/0xb4610521d3fc61f4837edbd899acb6c33a5fe0f3bb32ab84745ac0a8b1859906
     // and from pancake-frontend config

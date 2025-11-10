@@ -14,3 +14,4 @@ foundry-out/
 # Ignores development broadcast logs
 !/broadcast
 /broadcast/*
+deploy.sh

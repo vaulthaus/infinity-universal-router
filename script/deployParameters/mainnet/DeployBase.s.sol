@@ -14,9 +14,6 @@ import {RouterParameters} from "../../../src/base/RouterImmutables.sol";
  */
 contract DeployBase is DeployUniversalRouter {
     /// @notice contract address will be based on deployment salt
-    function getDeploymentSalt() public pure override returns (bytes32) {
-        return keccak256("INFINITY-UNIVERSAL-ROUTER/UniversalRouter/1.0.0");
-    }
 
     function setUp() public override {
         params = RouterParameters({

@@ -22,14 +22,7 @@ abstract contract DeployUniversalRouter is Script {
     // set values for params and unsupported
     function setUp() public virtual;
 
-    /// @notice must be implemented by the inheriting contract to make sure eth deployment salt is unique
-    /// since the deployment salt will be the only factor to decide the address of the newly deployed contract
-    function getDeploymentSalt() public view virtual returns (bytes32);
-
     function run() external returns (address router) {
-        /// @dev address from https://github.com/pancakeswap/pancake-create3-factory
-        Create3Factory factory = Create3Factory(0x38Ab3f2CE00973A51d3A2A04d634C9bcbf20e4e1);
-
         // deployer will the the initial owner of universal router
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
@@ -62,20 +55,17 @@ abstract contract DeployUniversalRouter is Script {
 
         logParams();
 
-        /// Prepare the payload to transfer ownership to deployer.
-        /// @dev deployer must call acceptOwnership after to be the owner
         address owner = vm.addr(deployerPrivateKey);
         console.log("universal router owner:", owner);
 
-        bytes memory afterDeploymentExecutionPayload = abi.encodeWithSelector(Ownable.transferOwnership.selector, owner);
-
-        bytes memory creationCode = abi.encodePacked(type(UniversalRouter).creationCode, abi.encode(params));
-
-        router = factory.deploy(
-            getDeploymentSalt(), creationCode, keccak256(creationCode), 0, afterDeploymentExecutionPayload, 0
-        );
+        // Deploy UniversalRouter directly without Create3Factory
+        router = address(new UniversalRouter(params));
 
         console.log("UniversalRouter contract deployed at ", router);
+
+        // Transfer ownership to deployer
+        UniversalRouter(payable(router)).transferOwnership(owner);
+        console.log("Ownership transferred to:", owner);
 
         vm.stopBroadcast();
     }
