@@ -15,3 +15,5 @@ foundry-out/
 !/broadcast
 /broadcast/*
 deploy.sh
+
+cache_hardhat
